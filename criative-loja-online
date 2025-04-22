@@ -1,0 +1,128 @@
+# Corrigindo o erro criando todas as subpastas necessárias antes de escrever o arquivo
+required_folders = [
+    "criative-loja-online/src/app",
+    "criative-loja-online/public/images",
+    "criative-loja-online/src/components/ui"
+]
+
+# Criar as pastas
+for folder in required_folders:
+    os.makedirs(f"/mnt/data/{folder}", exist_ok=True)
+
+# Repetir o processo de criação do arquivo principal após garantir as pastas
+code_file_path = "/mnt/data/criative-loja-online/src/app/page.tsx"
+with open(code_file_path, "w") as f:
+    f.write("""import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+export default function Home() {
+  return (
+    <div className="p-4 md:p-10">
+      <header className="text-center mb-10">
+        <img
+          src="/images/logo-criative.png"
+          alt="Logo Criative"
+          className="mx-auto mb-4 w-32 h-32 object-contain"
+        />
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">Criative</h1>
+        <p className="text-lg text-gray-500">Moda Masculina & Feminina com estilo e atitude</p>
+        <a
+          href="https://api.whatsapp.com/send?phone=5522992563213"
+          className="inline-block mt-4 bg-green-500 text-white px-6 py-2 rounded-xl hover:bg-green-600"
+          target="_blank"
+        >
+          Fale Conosco no WhatsApp
+        </a>
+        <p className="mt-2 text-sm text-gray-500">📍 Envio para todo o Brasil | 📦 Promoção de Inauguração</p>
+      </header>
+
+      <div className="grid md:grid-cols-2 gap-6 mb-10">
+        <Card>
+          <CardContent className="p-4">
+            <img
+              src="/images/roupa-masculina-basica.jpg"
+              alt="Moda Masculina"
+              className="rounded-xl w-full h-72 object-cover"
+            />
+            <h2 className="mt-4 text-xl font-semibold">Moda Masculina</h2>
+            <p className="text-gray-600">Estilo casual e criativo para o dia a dia.</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <img
+              src="/images/roupa-feminina-basica.jpg"
+              alt="Moda Feminina"
+              className="rounded-xl w-full h-72 object-cover"
+            />
+            <h2 className="mt-4 text-xl font-semibold">Moda Feminina</h2>
+            <p className="text-gray-600">Beleza e elegância com peças confortáveis.</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <h2 className="text-2xl font-bold text-center mb-6">🛍️ Produtos em Destaque</h2>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[{
+          nome: "Camiseta Básica Masculina",
+          preco: "R$ 69,90",
+          imagem: "/images/camiseta-masculina.jpg"
+        }, {
+          nome: "Vestido Casual Feminino",
+          preco: "R$ 89,90",
+          imagem: "/images/vestido-feminino.jpg"
+        }, {
+          nome: "Camisa Slim Elegante",
+          preco: "R$ 99,90",
+          imagem: "/images/camisa-slim.jpg"
+        }, {
+          nome: "Conjunto Feminino Confort",
+          preco: "R$ 109,90",
+          imagem: "/images/conjunto-feminino.jpg"
+        }].map((produto, index) => (
+          <Card key={index}>
+            <CardContent className="p-4">
+              <img
+                src={produto.imagem}
+                alt={produto.nome}
+                className="rounded-xl w-full h-60 object-cover"
+              />
+              <h3 className="mt-4 text-lg font-semibold">{produto.nome}</h3>
+              <p className="text-green-600 font-bold">{produto.preco}</p>
+              <a
+                href={`https://api.whatsapp.com/send?phone=5522992563213&text=Olá!%20Gostaria%20de%20comprar%20${encodeURIComponent(produto.nome)}.%20Pode%20me%20passar%20os%20detalhes%20e%20finalizar%20o%20pedido?`}
+                target="_blank"
+                className="inline-block mt-2 bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800"
+              >
+                Comprar Agora
+              </a>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="mt-10 text-center">
+        <a
+          href="https://www.instagram.com/lojacriativeofficial/"
+          className="text-blue-600 hover:underline"
+          target="_blank"
+        >
+          📸 Siga a Criative no Instagram
+        </a>
+      </div>
+
+      <div className="mt-12 border-t pt-8 text-center text-gray-600">
+        <h2 className="text-xl font-bold mb-2">💳 Formas de Pagamento</h2>
+        <p>Aceitamos Pix, transferência, cartão de crédito e débito.</p>
+        <p>Pagamento 100% seguro via WhatsApp após escolha do produto.</p>
+      </div>
+    </div>
+  );
+}
+""")
+
+# Compactar a pasta do projeto
+zip_path = shutil.make_archive("/mnt/data/criative-loja-online", 'zip', "/mnt/data/criative-loja-online")
+zip_path
